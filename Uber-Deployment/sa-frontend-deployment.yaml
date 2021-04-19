@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa-frontend 
+spec:
+  replicas: 1
+  minReadySeconds: 15
+  selector:
+    matchLabels:
+      app: sa-frontend 
+  strategy:
+    type: RollingUpdate 
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1 
+  template:
+    metadata: 
+      labels:
+        app: sa-frontend 
+    spec:
+      containers:
+          - image: 880254308112.dkr.ecr.us-east-1.amazonaws.com/uber-react:prod
+            imagePullPolicy: Always 
+            name: sa-frontend 
+            ports:
+              - containerPort: 80
