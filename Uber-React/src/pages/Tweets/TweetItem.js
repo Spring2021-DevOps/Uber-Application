@@ -1,13 +1,17 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 
-const TweetItem = ({ item: tweet }) => {
+const TweetItem = ({ item: booking }) => {
   return (
     <View style={styles.row}>
-      <Image style={styles.rowIcon} source={tweet.pic} />
+      <Image style={styles.rowIcon} source={""} />
       <View style={styles.rowData}>
-        <Text style={styles.rowDataText}>{`${tweet.date} ${tweet.user} ${tweet.private} ${tweet.aboutme}`}</Text>
-        <Text style={styles.rowDataSubText}>{tweet.description}</Text>
+        <Text style={styles.rowDataSubText}>First Name           : {booking.firstName}</Text><br></br>
+        <Text style={styles.rowDataSubText}>Last Name            : {booking.lastName}</Text><br></br>
+        <Text style={styles.rowDataSubText}>Source                   : {booking.source}</Text><br></br>
+        <Text style={styles.rowDataSubText}>Destination          : {booking.destination}</Text><br></br>
+        <Text style={styles.rowDataSubText}>Journey Date       : {booking.journeyDate}</Text><br></br>
+
       </View>
     </View>
   );
