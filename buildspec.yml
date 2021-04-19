@@ -50,8 +50,8 @@ phases:
   post_build:
     commands:
     - echo Pushing prod images to ECR...
-    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-python:prod
-    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-react:prod
+    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-python:$CODEBUILD_RESOLVED_SOURCE_VERSION
+    - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-react:$CODEBUILD_RESOLVED_SOURCE_VERSION
     - cd $CODEBUILD_SRC_DIR
     - echo Applying deployments
     - kubectl apply -f Uber-Deployment
