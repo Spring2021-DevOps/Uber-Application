@@ -1,18 +1,13 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 
-const TweetItem = ({ item: booking }) => {
+const TweetItem = ({ item: tweet }) => {
   return (
     <View style={styles.row}>
-      <Image style={styles.rowIcon} source={""} />
+      <Image style={styles.rowIcon} source={tweet.pic} />
       <View style={styles.rowData}>
-  
-        <Text style={styles.rowDataSubText}>First Name           : {booking.firstName}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Last Name            : {booking.lastName}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Source                   : {booking.source}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Destination          : {booking.destination}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Journey Date       : {booking.journeyDate}</Text><br></br>
-
+        <Text style={styles.rowDataText}>{`${tweet.date} ${tweet.user} ${tweet.private} ${tweet.aboutme}`}</Text>
+        <Text style={styles.rowDataSubText}>{tweet.description}</Text>
       </View>
     </View>
   );
@@ -29,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
-    marginBottom: 25,
+    marginBottom: 5,
     backgroundColor: "white",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "rgba(0,0,0,0.1)"
@@ -50,9 +45,9 @@ const styles = StyleSheet.create({
     color: "#4b4b4b"
   },
   rowDataSubText: {
-    fontSize: 17,
-    opacity: 0.9,
-    color: "black",
+    fontSize: 13,
+    opacity: 0.8,
+    color: "#a8a689",
     marginTop: 4
   }
 });

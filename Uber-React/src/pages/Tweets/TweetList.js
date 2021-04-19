@@ -4,10 +4,10 @@ import { SwipeableFlatList } from "react-native";
 import TweetItem from "./TweetItem";
 import TweetActions from "./TweetActions";
 
-const TweetList = ({ bookings }) => {
+const TweetList = ({ tweets }) => {
   return (
     <SwipeableFlatList
-      data={bookings}
+      data={tweets}
       bounceFirstRowOnMount={true}
       maxSwipeDistance={160}
       renderItem={TweetItem}

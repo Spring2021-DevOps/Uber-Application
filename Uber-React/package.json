@@ -9,12 +9,10 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.19.2",
     "chart.js": "^2.9.4",
-    "dotenv": "^8.2.0",
     "github-markdown-css": "4.x",
+    "google-maps-react": "2.0.6",
     "react": "^16.12.0",
-    "react-axios": "^2.0.5",
-    "react-chartjs-2": "^2.11.1",
-    "react-charts": "^2.0.0-beta.7",
+    "react-chartjs-2": "2.11.1",
     "react-dom": "^16.12.0",
     "react-hook-form": "^6.4.1",
     "react-markdown": "4.x",
@@ -23,7 +21,6 @@
     "react-scripts": "3.4.3",
     "react-swipeable-views": "^0.13.9",
     "recharts": "^1.8.5",
-    "sweetalert": "^2.1.2",
     "tubular-react": "^4.2.5"
   },
   "scripts": {

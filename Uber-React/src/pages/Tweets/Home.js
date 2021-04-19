@@ -3,25 +3,23 @@ import { ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 import TweetList from "./TweetList";
 //import axios from 'axios';
 
-require('dotenv').config()
-
-const { REACT_APP_PYTHON_HOST } = process.env;
-
 const THome = () => {
-  const [bookings, setBookings] = React.useState([]);
+  const [tweets, setTweets] = React.useState([]);
   const [loading, setLoading] = React.useState(true);   
   
   useEffect(() => {
     const fetchData = async () => {
-    //  const res = await fetch("http://0.0.0.0:5000/bookings");
-    var url = "http://"+ REACT_APP_PYTHON_HOST + ":5000/bookings";
-	  const res = await fetch(url);
+      //const res = await fetch("http://localhost:5000/tweets-results");
+      //const res = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweets-results`);
+      //const res = await fetch(`${process.env.REACT_APP_API_SERVICE_URL}/tweets-results`);
+      const res = await fetch("http://flask-react-alb-1245275495.us-east-1.elb.amazonaws.com/tweets-results");
       const { results } = await res.json();
       console.log(results);
-      setBookings([...results]);
-	  setLoading(false);
+      setTweets([...results]);
+	    setLoading(false);
     };
  
+    //print("Home.js: fetching from " + `${process.env.REACT_APP_API_SERVICE_URL}/tweets-results`)
     fetchData();
   }, []);
 
@@ -34,7 +32,7 @@ const THome = () => {
 		  size="large"
 	    />
 	  ) : (
-	    <TweetList bookings={bookings} />
+	    <TweetList tweets={tweets} />
 	  )}
     </ScrollView>
   );
@@ -42,9 +40,8 @@ const THome = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
-    marginTop: '60px',
-    opacity: 0.8
+    backgroundColor: "whitesmoke",
+    marginTop: '60px'
   },
   centering: {
     alignItems: "center",

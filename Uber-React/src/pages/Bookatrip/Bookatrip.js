@@ -9,18 +9,35 @@ import Button from '@material-ui/core/Button'
 //import Button from '@material-ui/Button'
 import Paper from '@material-ui/core/Paper'
 //import MenuContext from 'material-ui-shell/lib/providers/Menu/Context'
-import swal from 'sweetalert';
+import { Link } from 'react-router-dom'
 
+import Map from '../../components/Map'
+
+const mapStyles = {
+  width: '10%',
+  height: '10%'
+};
+
+const localStorageAuthKey = 'twtr:auth';
+function getAccessToken() {
+  if (typeof Storage !== 'undefined') {
+      try {
+        var keys = JSON.parse(localStorage.getItem(localStorageAuthKey));
+        return keys.access;
+        // the refresh token is keys.refresh
+
+      } catch (ex) {
+          console.log(ex);
+      }
+  } else {
+      // No web storage Support :-(
+  }
+}
 
 let formatTwoDigits = (digit) => ("0" + digit).slice(-2);
 var tempDate = new Date();
 
-require('dotenv').config()
-
-const { REACT_APP_PYTHON_HOST } = process.env;
-
 const useStyles = makeStyles((theme) => ({
-  
   paper: {
     width: 'auto',
     marginLeft: theme.spacing(3),
@@ -57,9 +74,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: `100%`,
   },
+  map: {
+    display: 'flex',
+    padding:'20px',
+    marginLeft:'175px'
+
+  }
 }))
 
-const Compose = () => {
+const Bookatrip = () => {
   const classes = useStyles();
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
@@ -68,15 +91,23 @@ const Compose = () => {
   const [destination, setDestination] = useState('');
   const [journeyDate, setJourneyDate] = useState('');
 
-  // async launch POST
-  const postTweet = async (firstNameP, lastNameP, sourceP, destinationP, journeyDateP) => {
-    const paramdict = {
-      'firstNameP': firstNameP,
-      'lastNameP': lastNameP,
-      'sourceP': sourceP,
-      'destinationP': destinationP,
-      'journeydDateP': journeyDateP
-    }
+
+    // async launch POST with access token
+    const postTweet = async (firstNameP, lastNameP, sourceP, destinationP, journeyDateP) => {
+      const access_token = getAccessToken();
+      console.log('access_token:');
+      console.log(access_token);
+      const paramdict = {
+        'firstNameP': firstNameP,
+        'lastNameP': lastNameP,
+        'sourceP': sourceP,
+        'destinationP': destinationP,
+        'journeydDateP': journeyDateP,
+        'access-token': access_token
+      }
+
+    console.log('postTweet paramdict:');
+    console.log(paramdict);
 
     try {
       const config = {
@@ -87,25 +118,30 @@ const Compose = () => {
           },
           body: JSON.stringify(paramdict)
       }
-      //const response = await fetch("http://0.0.0.0:5000/book-trip", config);
-      var url = "http://" + REACT_APP_PYTHON_HOST + ":5000/book-trip"
-      const response = await fetch(url, config);
+      
+      //print("Compose.js: fetching from " + `${process.env.REACT_APP_API_SERVICE_URL}/tweet`)
+      //const response = await fetch("http://localhost:5000/tweet", config);
+      //const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
+      //const response = await fetch(`${process.env.REACT_APP_API_SERVICE_URL}/tweet`, config);
+        const response = await fetch("http://flask-react-alb-1245275495.us-east-1.elb.amazonaws.com/tweet", config);
+
       //const json = await response.json()
       if (response.ok) {
           //return json
           //return response
-          swal("Your Trip Is Confirmed!");
           console.log("success on send.");
           
       } else {
-          console.log("launch: failure on send!");
-          swal("Some Issue Occurred");
+          alert("response: " + response.toString());
       }
 
       try {
         const data = await response.json();
         console.log("on reply:")
         console.log(data);
+
+        // back to landing page!
+        history.push("/");
       } catch (err) {
         console.log(err);
         alert("exception on reply!");
@@ -117,23 +153,23 @@ const Compose = () => {
     }
   };
 
-  function handleSubmit(event) {
-    //alert("fffddd")
 
+  function handleSubmit(event) {
     event.preventDefault()
 
     const priv = true;
     //const username = 'Elon Musk';
-  //  const myArray = [
-  //    "women",
-  //    "men"
-  //  ];
-   // const img_gender = myArray[Math.floor(Math.random()*myArray.length)];
-   // const img_index = Math.floor(Math.random() * 100) + 1 ;
-   // const img_url = 'https://randomuser.me/api/portraits/' + img_gender + '/' + img_index.toString() + '.jpg';
+    //const myArray = [
+    //  "women",
+    //  "men"
+    // ];
+    //const img_gender = myArray[Math.floor(Math.random()*myArray.length)];
+    //const img_index = Math.floor(Math.random() * 100) + 1 ;
+    //const img_url = 'https://randomuser.me/api/portraits/' + img_gender + '/' + img_index.toString() + '.jpg';
     
     postTweet(firstName, lastName, source, destination, journeyDate);  
-    //alert('Your trip has been Booked!');
+   // postTweet(username, tweet, priv, img_url);  
+    alert('Booking done!');
   }
 
   return (
@@ -245,8 +281,15 @@ const Compose = () => {
           </div>
         </div>
       </Paper>
+
+      <div className={classes.map}>
+      <Map />
+      </div>
+   
+
+
     </React.Fragment>
   )
 }
 
-export default Compose
+export default Bookatrip

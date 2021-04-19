@@ -61,7 +61,7 @@ const SignUp = () => {
   function handleSubmit(event) {
     event.preventDefault()
 
-    // register new user!
+    // fwo: register new user!
     //.. return userid
 
     // save more: name, group, userid
@@ -156,7 +156,6 @@ const SignUp = () => {
               autoComplete="current-password"
             />
             <Button
-              style={{ background: 'black' }}
               type="submit"
               fullWidth
               variant="contained"

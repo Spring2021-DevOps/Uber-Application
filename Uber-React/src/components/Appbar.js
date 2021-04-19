@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Router, Route, Link, Switch } from "react-router-dom";
+import { Router, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import AppBar from '@material-ui/core/AppBar';
@@ -21,9 +21,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import AirportShuttleRoundedIcon from '@material-ui/icons/AirportShuttleRounded';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import LayersIcon from '@material-ui/icons/Layers';
+
+import AirportShuttleRoundedIcon from '@material-ui/icons/AirportShuttleRounded';
+import AirlineSeatLegroomNormalIcon from '@material-ui/icons/AirlineSeatLegroomNormal';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 import config from '../config/config'
 
@@ -34,9 +38,8 @@ import SignIn from "../pages/SignIn/SignIn";
 import PasswordReset from "../pages/PasswordReset/PasswordReset";
 import PasswordChange from "../pages/PasswordChange/PasswordChange";
 import THome from "../pages/Tweets/Home";
-import Compose from "../pages/Compose/Compose";
+import Bookatrip from "../pages/Bookatrip/Bookatrip";
 import Charts from "../pages/Charts/Charts";
-import { NotFound } from "../pages/NotFound";
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -149,7 +152,7 @@ export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [collapsed, setCollapsed] = React.useState(false);
-  const [title, setTitle] = React.useState('UBER Bus');
+  const [title, setTitle] = React.useState('Home');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -172,7 +175,7 @@ export default function Dashboard() {
       <CssBaseline />
 
       {/* This is the header AppBar */}
-      <AppBar style={{ background: 'black' }} position="absolute" className={clsx(classes.appBar, 
+      <AppBar style={{ background: 'black', opacity:0.75 }} position="absolute" className={clsx(classes.appBar, 
           open && classes.appBarShift, collapsed && classes.appBar)}>
         <Toolbar title={title} className={classes.toolbar}>
 
@@ -192,12 +195,11 @@ export default function Dashboard() {
             {title}
           </Typography>
 
-          
-
           {/* For kicks */}
           <IconButton color="inherit">
             <Badge badgeContent={2} color="secondary">
-            <AirportShuttleRoundedIcon/>
+              
+              <AirportShuttleRoundedIcon/>
             </Badge>
           </IconButton>
         </Toolbar>
@@ -229,9 +231,9 @@ export default function Dashboard() {
           <List>
 
             {/* Bookings menu item*/}
-            <ListItem button component={Link} to="/signin" onClick={onItemClick('Bookings')}>
+            <ListItem button component={Link} to="/bookings" onClick={onItemClick('Bookings')}>
               <ListItemIcon>
-                <DashboardIcon />
+              <AirlineSeatLegroomNormalIcon />
               </ListItemIcon>
               <ListItemText primary="Bookings" />
               { title === 'Bookings' && 
@@ -243,10 +245,10 @@ export default function Dashboard() {
               }
             </ListItem>
 
-            {/* Book a Trip menu item*/}
+            {/* Compose menu item*/}
             <ListItem button component={Link} to="/bookatrip" onClick={onItemClick('Book a Trip')}>
               <ListItemIcon>
-                <DashboardIcon />
+              <AirportShuttleRoundedIcon/>
               </ListItemIcon>
               <ListItemText primary="Book a Trip" />
               { title === 'Book a Trip' && 
@@ -259,9 +261,25 @@ export default function Dashboard() {
             </ListItem>
 
             {/* SignUp menu item */}
+            <ListItem button component={Link} to="/signin" onClick={onItemClick('Sign In')}>
+              <ListItemIcon>
+              <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sign In" />
+              { title === 'Sign In' && 
+                <ListItemIcon>
+                  <IconButton onClick={handleDrawerCollapsed}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </ListItemIcon>
+              }
+            </ListItem>
+            
+
+            {/* SignUp menu item */}
             <ListItem button component={Link} to="/analysis" onClick={onItemClick('Get Analysis')}>
               <ListItemIcon>
-                <DashboardIcon />
+                <EqualizerIcon />
               </ListItemIcon>
               <ListItemText primary="Get Analysis" />
               { title === 'Get Analysis' && 
@@ -278,19 +296,17 @@ export default function Dashboard() {
 
         {/* This is your mission control: Matches URLs above to your components */}
         <main className={classes.content}>
-        <Switch>
+
           {/* menu paths */}
           <Route exact path="/" component={Home} />
           <Route path="/bookings" component={THome} />
-          <Route path="/bookatrip" component={Compose} />
+          <Route path="/bookatrip" component={Bookatrip} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/password_reset" component={PasswordReset} />
           <Route path="/password_change" component={PasswordChange} />
           <Route path="/analysis" component={Charts} />
-          <Route component={NotFound} />
           {/* <Route path="/activity"><ActivityHome /></Route> */}
-          </Switch>
         </main>
       </Router>
       

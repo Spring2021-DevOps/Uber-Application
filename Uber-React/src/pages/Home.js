@@ -19,7 +19,7 @@ function Home(props) {
 
   return (
       <div className={classes.root}>
-        <h1>UBER Bus Booking App</h1>
+        <h1>Uber Bus Booking App</h1>
       </div>
   );
 }

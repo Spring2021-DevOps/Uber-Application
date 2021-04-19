@@ -87,7 +87,6 @@ const PasswordReset = () => {
             />
 
             <Button
-              style={{ background: 'black' }}
               type="submit"
               fullWidth
               variant="contained"
