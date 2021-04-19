@@ -53,4 +53,4 @@ phases:
     - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-react:prod
     - cd $CODEBUILD_SRC_DIR
     - echo Applying deployments
-    - kubectl apply -f sa-frontend-deployment.yaml
+    - kubectl apply -f Uber-Deployment
