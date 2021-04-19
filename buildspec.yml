@@ -20,6 +20,7 @@ phases:
       - chmod +x ./aws-iam-authenticator
       - mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$HOME/bin:$PATH
       - aws-iam-authenticator help
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
 
   pre_build:
     commands:
@@ -37,12 +38,12 @@ phases:
       - >
         docker build \
           -f Uber-Python/Dockerfile \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-python:prod \
+          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-python:$CODEBUILD_RESOLVED_SOURCE_VERSION \
           ./Uber-Python
       - >
         docker build \
           -f Uber-React/Dockerfile \
-          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-react:prod \
+          -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-react:$CODEBUILD_RESOLVED_SOURCE_VERSION \
           --build-arg NODE_ENV=production \
           --build-arg REACT_APP_API_SERVICE_URL=$REACT_APP_API_SERVICE_URL \
           ./Uber-React
