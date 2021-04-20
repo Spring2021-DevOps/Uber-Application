@@ -1,18 +1,19 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
+import Map from '../../components/Map'
 
 const TweetItem = ({ item: booking }) => {
   return (
     <View style={styles.row}>
-      <Image style={styles.rowIcon} source={""} />
+      
+      <Image style={styles.rowIcon} source={"../../ubericon.webp"} />
       <View style={styles.rowData}>
-      <Text style={styles.rowDataSubText}>Username           : {booking.user}</Text><br></br>
-        <Text style={styles.rowDataSubText}>First Name           : {booking.firstName}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Last Name            : {booking.lastName}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Source                   : {booking.source}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Destination          : {booking.destination}</Text><br></br>
-        <Text style={styles.rowDataSubText}>Journey Date       : {booking.journeyDate}</Text><br></br>
-
+      <Text style={styles.rowDataText}>Username           : {booking.user}</Text><br></br>
+        <Text style={styles.rowDataText}>First Name           : {booking.firstName}</Text><br></br>
+        <Text style={styles.rowDataText}>Last Name            : {booking.lastName}</Text><br></br>
+        <Text style={styles.rowDataText}>Source                   : {booking.source}</Text><br></br>
+        <Text style={styles.rowDataText}>Destination          : {booking.destination}</Text><br></br>
+        <Text style={styles.rowDataText}>Journey Date       : {booking.journeyDate}</Text><br></br>
       </View>
     </View>
   );
@@ -45,15 +46,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   rowDataText: {
-    fontSize: 15,
+    fontSize: 17,
     textTransform: "capitalize",
-    color: "#4b4b4b"
+    color: "black"
   },
   rowDataSubText: {
     fontSize: 13,
     opacity: 0.8,
     color: "#a8a689",
     marginTop: 4
+  },
+  map: {
+    width:'10%',
+    height:'10%'  
   }
 });
 

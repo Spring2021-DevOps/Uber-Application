@@ -32,7 +32,7 @@ export default class Charts extends React.Component {
       }
       async componentDidMount() {
         console.log("I am in mount");
-        var url = "http://a6df721a5f50a4c0db1336cda1a5ea5e-1368272632.us-east-1.elb.amazonaws.com:5000/analysis"
+        var url = "http://localhost:5000/analysis"
         await axios(url).then(
             (response) => {
                 this.setState({

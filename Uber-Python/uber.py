@@ -16,6 +16,7 @@ import pathlib
 import io
 from uuid import UUID
 from bson.objectid import ObjectId
+import json as JSON
 
 # straight mongo access
 from pymongo import MongoClient
@@ -47,10 +48,31 @@ bookings = dict()
 def getHealth():
     return "Hello from Python application"
 
+
+client =MongoClient("mongodb+srv://test:test@bookings.hclbd.mongodb.net/bookings?retryWrites=true&w=majority")
+db=client.bookings
+
+def getCities():
+    print("Getting Cities")
+    result = {}
+    cities = []
+    count = []
+    result = db.bookings.aggregate(
+        [
+        {
+            "$group":{"_id":"$destination","Total":{"$sum":1}}
+        }
+        ])
+    for i in result: 
+        cities.append(i["_id"])
+        count.append(i["Total"])
+    return cities, count
+
+
 @app.route('/analysis', methods=["GET"])
 def getCityFrequency():
     try:
-        result = database.getCities()
+        result = getCities()
         return JSON.dumps({"city": list(result[0]), "count":list(result[1])})
     except Exception as e:
         print(e)
@@ -438,7 +460,8 @@ def add_booktrip():
     destination = request.json["destinationP"]
     journeyDate = request.json["journeydDateP"]
 
-    access_token = request.json['access-token']
+   # access_token = request.json['access-token']
+    access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYW5pc2hrYXB1c2thckBnbWFpbC5jb20iLCJmaXJzdE5hbWVQIjoiQW5pc2giLCJsYXN0TmFtZVAiOiJLYXB1c2thciIsInNvdXJjZVAiOiJCb3N0b24iLCJkZXN0aW5hdGlvblAiOiJTdW5ueXZhbGUiLCJqb3VybmV5RGF0ZSI6IjIwMjEtMDQtMjAifQ.Ggeq4KlFtfSc1rw4q6UdhedbGW5yTyhgru9Kuu6vDps"
     print("access_token:", access_token)
     permission = verify_token(access_token)
  #   if not permission[0]: 
@@ -468,7 +491,7 @@ def get_bookings_day2():
     return jsonify(todaysbookings)
 
 # endpoint to show all bookings 
-@app.route("/bookings", methods=["GET"])
+@app.route("/bookings2", methods=["GET"])
 def get_bookings2():
     return jsonify(bookings)
 
