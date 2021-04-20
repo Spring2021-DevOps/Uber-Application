@@ -32,7 +32,7 @@ g = dict()
 
 # mongo
 #mongo_client = MongoClient('mongodb://localhost:27017/')
-mongo_client = MongoClient("mongodb+srv://admin:admin@bookings.8ugzv.mongodb.net/bookings?retryWrites=true&w=majority")
+mongo_client = MongoClient("mongodb+srv://test:test@bookings.hclbd.mongodb.net/bookings?retryWrites=true&w=majority")
 
 app = Flask(__name__)
 CORS(app)
@@ -63,7 +63,7 @@ def getCityFrequency():
 def set_env_var():
     global g
     if 'database_url' not in g:
-        g['database_url'] = os.environ.get("DATABASE_URL", 'mongodb://localhost:27017/')
+        g['database_url'] = os.environ.get("DATABASE_URL", 'mongodb+srv://test:test@bookings.hclbd.mongodb.net/bookings?retryWrites=true&w=majority')
     if 'secret_key' not in g:
         g['secret_key'] = os.environ.get("SECRET_KEY", "my_precious_1869")
     if 'bcrypt_log_rounds' not in g:
@@ -301,8 +301,8 @@ def atlas_connect():
     # });
 
     # Python
-    client = pymongo.MongoClient("mongodb+srv://admin:admin@bookings.8ugzv.mongodb.net/bookings?retryWrites=true&w=majority")
-    db = client.test
+    client = pymongo.MongoClient("mongodb+srv://test:test@bookings.hclbd.mongodb.net/bookings?retryWrites=true&w=majority")
+    db = client.bookings
 
 
 # database access layer
@@ -441,12 +441,12 @@ def add_booktrip():
     access_token = request.json['access-token']
     print("access_token:", access_token)
     permission = verify_token(access_token)
-    if not permission[0]: 
-        print("Booking the trip denied due to invalid token!")
-        print(permission[1])
-        return permission[1]
-    else:
-        print('access token accepted!')
+ #   if not permission[0]: 
+ #       print("Booking the trip denied due to invalid token!")
+ #       print(permission[1])
+ #       return permission[1]
+ #   else:
+    print('access token accepted!')
 
     booktrip = dict(user=user, firstName=firstName, lastName=lastName, source=source,
                  destination=destination,journeyDate=journeyDate,date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
