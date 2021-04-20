@@ -53,6 +53,8 @@ phases:
     - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-python:$CODEBUILD_RESOLVED_SOURCE_VERSION
     - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/uber-react:$CODEBUILD_RESOLVED_SOURCE_VERSION
     - cd $CODEBUILD_SRC_DIR
+    - echo Installing metric server
+    - kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml    
     - echo Applying deployments
     - export CODEBUILD_RESOLVED_SOURCE_VERSION=$CODEBUILD_RESOLVED_SOURCE_VERSION
     - envsubst < Uber-Deployment/sa-frontend-deployment.yaml | kubectl apply -f -
