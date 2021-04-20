@@ -6,6 +6,7 @@ const TweetItem = ({ item: booking }) => {
     <View style={styles.row}>
       <Image style={styles.rowIcon} source={""} />
       <View style={styles.rowData}>
+      <Text style={styles.rowDataSubText}>Username           : {booking.user}</Text><br></br>
         <Text style={styles.rowDataSubText}>First Name           : {booking.firstName}</Text><br></br>
         <Text style={styles.rowDataSubText}>Last Name            : {booking.lastName}</Text><br></br>
         <Text style={styles.rowDataSubText}>Source                   : {booking.source}</Text><br></br>
