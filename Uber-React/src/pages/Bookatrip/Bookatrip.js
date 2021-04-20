@@ -126,7 +126,7 @@ const Bookatrip = () => {
       //const response = await fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/tweet`, config);
       //const response = await fetch(`${process.env.REACT_APP_API_SERVICE_URL}/tweet`, config);
         const response = await fetch("http://a6df721a5f50a4c0db1336cda1a5ea5e-1368272632.us-east-1.elb.amazonaws.com:5000/book-trip", config);
-
+      //const response = await fetch("http://localhost:5000/book-trip", config);
       //const json = await response.json()
       if (response.ok) {
           //return json
@@ -283,6 +283,9 @@ const Bookatrip = () => {
             >
               {'Submit'}
             </Button>
+
+      <Map />
+
           </form>
 
           <div
@@ -294,12 +297,12 @@ const Bookatrip = () => {
             }}
           >
           </div>
+      
         </div>
+
       </Paper>
 
-      <div className={classes.map}>
-      <Map />
-      </div>
+
    
 
 

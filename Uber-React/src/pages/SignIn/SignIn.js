@@ -129,6 +129,7 @@ const SignIn = () => {
     //fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/login`, config)
     //fetch(`${process.env.REACT_APP_API_SERVICE_URL}/login`, config)
     fetch("http://a6df721a5f50a4c0db1336cda1a5ea5e-1368272632.us-east-1.elb.amazonaws.com:5000/login", config)
+    //fetch("http://localhost:5000/login", config)
       .then(response => response.json())
       .then(data => {
 
@@ -174,6 +175,7 @@ const SignIn = () => {
     //fetch(`${process.env.REACT_APP_BE_NETWORK}:${process.env.REACT_APP_BE_PORT}/fastlogin`, config)
     //fetch(`${process.env.REACT_APP_API_SERVICE_URL}/fastlogin`, config)
     fetch("http://a6df721a5f50a4c0db1336cda1a5ea5e-1368272632.us-east-1.elb.amazonaws.com:5000/fastlogin", config)
+    //fetch("http://localhost:5000/fastlogin", config)
       .then(response => response.json())
       .then(data => {
 
