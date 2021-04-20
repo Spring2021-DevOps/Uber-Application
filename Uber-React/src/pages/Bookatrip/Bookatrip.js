@@ -85,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
 const Bookatrip = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [username, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [source, setSource] = useState('');
@@ -93,11 +94,12 @@ const Bookatrip = () => {
 
 
     // async launch POST with access token
-    const postTweet = async (firstNameP, lastNameP, sourceP, destinationP, journeyDateP) => {
+    const postTweet = async (user, firstNameP, lastNameP, sourceP, destinationP, journeyDateP) => {
       const access_token = getAccessToken();
       console.log('access_token:');
       console.log(access_token);
       const paramdict = {
+        'user': user,
         'firstNameP': firstNameP,
         'lastNameP': lastNameP,
         'sourceP': sourceP,
@@ -167,7 +169,7 @@ const Bookatrip = () => {
     //const img_index = Math.floor(Math.random() * 100) + 1 ;
     //const img_url = 'https://randomuser.me/api/portraits/' + img_gender + '/' + img_index.toString() + '.jpg';
     
-    postTweet(firstName, lastName, source, destination, journeyDate);  
+    postTweet(username, firstName, lastName, source, destination, journeyDate);  
    // postTweet(username, tweet, priv, img_url);  
     alert('Booking done!');
   }
@@ -180,6 +182,19 @@ const Bookatrip = () => {
             {'Book an UBER Bus Trip'}
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} >
+          <TextField
+              value={username}
+              onInput={(e) => setUsername(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label={'User Name'}
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
             <TextField
               value={firstName}
               onInput={(e) => setFirstName(e.target.value)}
